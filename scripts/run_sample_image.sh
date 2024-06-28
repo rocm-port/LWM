@@ -5,9 +5,9 @@ export PROJECT_DIR="$( cd -- "$( dirname -- "$SCRIPT_DIR" )" &> /dev/null && pwd
 cd $PROJECT_DIR
 export PYTHONPATH="$PYTHONPATH:$PROJECT_DIR"
 
-export llama_tokenizer_path=""
-export vqgan_checkpoint=""
-export lwm_checkpoint=""
+export llama_tokenizer_path="/home/huggingface_cache/hub/models--LargeWorldModel--LWM-Chat-1M-Jax/snapshots/0ecb9dedfa9d946514f242936bfbd7935b8aa0cd/tokenizer.model"
+export vqgan_checkpoint="/home/huggingface_cache/hub/models--LargeWorldModel--LWM-Chat-1M-Jax/snapshots/0ecb9dedfa9d946514f242936bfbd7935b8aa0cd/vqgan"
+export lwm_checkpoint="/home/huggingface_cache/hub/models--LargeWorldModel--LWM-Chat-1M-Jax/snapshots/0ecb9dedfa9d946514f242936bfbd7935b8aa0cd/params"
 
 # Relevant params
 # --temperature_*: Temperature that is applied to each of the logits
@@ -29,4 +29,4 @@ python3 -u -m lwm.vision_generation \
     --update_llama_config="dict(sample_mode='vision',theta=50000000,max_sequence_length=32768,scan_attention=False,scan_query_chunk_size=128,scan_key_chunk_size=128,scan_mlp=False,scan_mlp_chunk_size=8192,scan_layers=True)" \
     --load_checkpoint="params::$lwm_checkpoint" \
     --tokenizer.vocab_file="$llama_tokenizer_path"
-read
+

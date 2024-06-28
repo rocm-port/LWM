@@ -571,10 +571,10 @@ class FlaxLLaMAAttention(nn.Module):
 
             platform = xla_bridge.get_backend().platform
             if platform == "tpu":
-                logging.info(f"Using fused attention for {platform}")
+                # logging.info(f"Using fused attention for {platform}")
                 ring_attention_fn = ring_flash_attention_tpu
             else:
-                logging.info(f"Fused attention is not yet supported for {platform}, using non-fused version")
+                # logging.info(f"Fused attention is not yet supported for {platform}, using non-fused version")
                 ring_attention_fn = ring_attention # uses BPT attention
             ring_attention_sharded = shard_map(
                 partial(
@@ -867,7 +867,7 @@ class FlaxLLaMAPreTrainedModel(FlaxPreTrainedModel):
         init_variables = self.module.init(
             jax.random.PRNGKey(0), input_ids, attention_mask, segment_ids, position_ids, return_dict=False, init_cache=True
         )
-        return init_variables["cache"].unfreeze()
+        return init_variables["cache"]#.unfreeze()
 
     @add_start_docstrings_to_model_forward("")
     def __call__(
